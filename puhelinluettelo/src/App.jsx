@@ -12,7 +12,8 @@ const App = () => {
     { name: "Mary Poppendieck", phoneNumber: "39-23-6423122" },
   ]);
 
-  const [newPerson, setNewPerson] = useState("a new person's name");
+  const [newPerson, setNewPerson] = useState("");
+  const [searchPerson, setSearchPerson] = useState("");
 
   /* 
   Add new person into person-array object
@@ -47,22 +48,43 @@ const App = () => {
     setNewPerson(event.target.value);
   };
 
+  /*
+  Filter persons based on search input
+  */
+  const filteredPersons =
+    searchPerson === ""
+      ? persons
+      : persons.filter((person) =>
+          person.name.toLowerCase().includes(searchPerson.toLowerCase())
+        );
+
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <div>
+        <label htmlFor="searchPerson">Search person </label>
+        <input
+          value={searchPerson}
+          onChange={(e) => setSearchPerson(e.target.value)}
+          type="text"
+          placeholder="Search person's name"
+          id="searchPerson"
+          name="searchPerson"
+        />
+      </div>
       <form onSubmit={addPerson}>
         <div>
-          Name
+          <label htmlFor="filterPersons">Name of person to be added </label>
           <input
             type="text"
-            placeholder="Persons name"
+            placeholder="Person's name to be added"
             pattern="[A-Za-z ']+"
-            //value={newPerson}
             onChange={addNewPerson}
           />
         </div>
         <div>
-          <label htmlFor="phoneNumber">Phonenumber:</label>
+          <label htmlFor="phoneNumber">Phonenumber </label>
           <input
             type="tel"
             id="phoneNumber"
@@ -78,7 +100,7 @@ const App = () => {
       </form>
       <h2>Persons's numbers</h2>
       <div>
-        <PrintoutPersons persons={persons} />
+        <PrintoutPersons persons={filteredPersons} />
       </div>
     </div>
   );
