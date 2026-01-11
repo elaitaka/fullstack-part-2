@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 import "./App.css";
 import PrintoutPersons from "./components/PrintoutPersons";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Markus", phoneNumber: "040-123456" },
-    { name: "Arto Hellas", phoneNumber: "040-12345" },
-    { name: "Ada Lovelace", phoneNumber: "39-44-5323523" },
-    { name: "Dan Abramov", phoneNumber: "12-43-234345" },
-    { name: "Mary Poppendieck", phoneNumber: "39-23-6423122" },
-  ]);
+  const [persons, setPersons] = useState([]);
 
   const [newPerson, setNewPerson] = useState("");
   const [searchPerson, setSearchPerson] = useState("");
+
+  const hook = () => {
+    console.log("effect");
+    axios.get("http://localhost:3001/persons").then((response) => {
+      console.log("promise fulfilled");
+      setPersons(response.data);
+    });
+  };
+
+  useEffect(hook, [])
 
   /* 
   Add new person into person-array object
