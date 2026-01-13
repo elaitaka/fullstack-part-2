@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react"
+import axios from "axios"
 
-import "./App.css";
-import PrintoutPersons from "./components/PrintoutPersons";
+import "./App.css"
+import PrintoutPersons from "./components/PrintoutPersons"
+import {hello} from './components/Model.js'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -18,7 +19,7 @@ const App = () => {
     });
   };
 
-  useEffect(hook, [])
+  useEffect(hook, []);
 
   /* 
   Add new person into person-array object
@@ -26,7 +27,10 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    console.log("Phone number is:", !event.target.phoneNumber.value);
+    console.log(
+      "addPerson and Phone number is:",
+      !event.target.phoneNumber.value
+    );
 
     persons.some(
       (person) =>
@@ -37,12 +41,8 @@ const App = () => {
       ? alert(
           `${newPerson} or ${event.target.phoneNumber.value} is already added to phonebook`
         )
-      : setPersons(
-          persons.concat({
-            name: newPerson,
-            phoneNumber: event.target.phoneNumber.value,
-          })
-        );
+      
+      : setPersons(hello(newPerson, event.target.phoneNumber.value,persons));
   };
 
   /* 
